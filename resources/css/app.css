@@ -3,9 +3,23 @@
 @tailwind utilities;
 
 #app{
-    /* height: 100vh; */
+    height: 100vh;
+}
+::-webkit-scrollbar {
+    width: 8px;
 }
 
+::-webkit-scrollbar-track {
+    background: #333;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #eeeeee;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 .conversation-item .avatar.online::before,
 .conversation-item .avatar.offline::before{
     width: 8px;
