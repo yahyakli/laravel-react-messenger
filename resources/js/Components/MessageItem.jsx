@@ -12,11 +12,16 @@ const MessageItem = ({ message }) => {
             <div className="chat-image avatar">
                 {<UserAvatar user={message.sender}/>}
             </div>
-            {console.log(message.sender.id !== currentUser.id)}
             {message.group_id && message.sender.id !== currentUser.id && (
                 <div className="opacity-50">{message.sender.name}</div>
             )}
-            <div className={`chat-bubble ${message.sender.id === currentUser.id? "chat-bubble-accent": "chat-bubble-primary"}`}><ReactMarkdown>{message.message}</ReactMarkdown></div>
+            <div className={`chat-bubble ${message.sender.id === currentUser.id? "chat-bubble-accent": "chat-bubble-primary"}`}>
+                <div className="chat-message">
+                    <div className="chat-message-content overflow-hidden">
+                        <ReactMarkdown>{message.message}</ReactMarkdown>
+                    </div>
+                </div>
+            </div>
             <div className="chat-footer">
                 <time className="text-xs opacity-80">
                     {formatMessageDateLong(message.created_at)}

@@ -4,17 +4,37 @@ import { useEffect, useRef, useState } from 'react';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
 import ConversationHeader from '@/Components/ConversationHeader';
 import MessageItem from '@/Components/MessageItem';
+import MessageInput from '@/Components/MessageInput';
+import { useEventBus } from '@/EventBus';
 
 
 function Home({ messages = null, selectedConversation = null }) {
 
     const [localMessages, setLocalMessages] = useState([]);
-    const messagesCtrRef = useRef(null);
+    const messagesCtrRef = useRef();
+    const { on } = useEventBus();
+
+    const messageCreated = (message) => {
+        if(selectedConversation && selectedConversation.is_group && selectedConversation.id === message.is_group){
+            setLocalMessages((prevMessage) => [...prevMessage, message]);
+        }
+        if(selectedConversation && selectedConversation.is_user && selectedConversation.id === message.sender_id || selectedConversation.id == message.receiver_id){
+            setLocalMessages((prevMessage) => [...prevMessage, message]);
+        }
+    };
 
     useEffect(() => {
         setTimeout(() => {
-            messagesCtrRef.current.scrollTop = messagesCtrRef.current.scrollHeight;
+            if(messagesCtrRef.current){
+                messagesCtrRef.current.scrollTop = messagesCtrRef.current.scrollHeight;
+            }
         }, 10);
+
+        const offCreated = on('message.created', messageCreated);
+
+        return () => {
+            offCreated();
+        }
     }, [selectedConversation]);
 
     useEffect(() => {
@@ -36,8 +56,7 @@ function Home({ messages = null, selectedConversation = null }) {
                     <ConversationHeader selectedConversation={selectedConversation}/>
                     <div
                         ref={messagesCtrRef}
-                        className='flex-1 p-5 overflow-y-auto'
-                        style={{ maxHeight: 'calc(100vh - 200px)' }} // Adjust this value according to your layout
+                        className='flex-1 p-5 overflow-y-auto custommm'
                     >
                         {localMessages.length === 0 && (
                             <div className='flex justify-center items-center h-full'>
@@ -57,7 +76,7 @@ function Home({ messages = null, selectedConversation = null }) {
                             </div>
                         )}
                     </div>
-                    {/* <MessageInput conversation={selectedConversation} /> */}
+                    <MessageInput conversation={selectedConversation} />
                 </div>
             )}
         </div>

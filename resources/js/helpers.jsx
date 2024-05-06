@@ -55,7 +55,7 @@ export const isToday = (date) => {
     );
 }
 
-export const isYesterday = () => {
+export const isYesterday = (date) => {
     const Yesterday = new Date();
     Yesterday.setDate(Yesterday.getDate() -1);
     return (

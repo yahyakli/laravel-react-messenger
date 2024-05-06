@@ -87,7 +87,6 @@ const ChatLayout = ({ children }) => {
             window.Echo.leave("online");
         };
     }, []);
-    console.log("selected", selectedConversation);
     return(
         <div className='flex-1 w-full flex overflow-hidden'>
             <div
@@ -118,10 +117,10 @@ const ChatLayout = ({ children }) => {
                 <div className='flex-1 overflow-auto'>
                     {sortedConversations && sortedConversations.map((conversation, index) => (
                         <ConversationItem
-                        key={index}
-                        conversation={conversation}
-                        online={!!isUserOnline(conversation.id)}
-                        selectedConversation={selectedConversation}
+                            key={index}
+                            conversation={conversation}
+                            online={!!isUserOnline(conversation.id)}
+                            selectedConversation={selectedConversation}
                         />
                     ))}
                 </div>

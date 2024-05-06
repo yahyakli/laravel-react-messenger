@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class StoreMessageRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,11 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'message' => "Nullable|string",
+            'group_id' => 'required_without:receiver_id|nullable|exists:groups,id',
+            'receiver_id' => 'required_without:group_id|nullable|exists:users,id',
+            'attachments' => 'nullable|array|max:10',
+            'attachments' => 'file|max:1024000',
         ];
     }
 }

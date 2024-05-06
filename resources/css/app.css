@@ -31,5 +31,12 @@
 .conversation-item .avatar.offline::before{
     background-color: #eeeeeeee;
 }
-
-
+.custommm{
+    height: calc(100vh - 200px);
+    min-height:max-content;
+}
+@media(max-width:420px){
+    .custommm{
+        height: calc(100vh - 230px);
+    }
+}
