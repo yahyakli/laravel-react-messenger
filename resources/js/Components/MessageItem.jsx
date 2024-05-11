@@ -3,8 +3,9 @@ import UserAvatar from "./UserAvatar";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { formatMessageDateLong } from "@/helpers"
+import MessageAttachments from "./MessageAttachments";
 
-const MessageItem = ({ message }) => {
+const MessageItem = ({ message, attachmentClick }) => {
     const page = usePage();
     const currentUser = page.props.auth.user;
     return (
@@ -20,6 +21,9 @@ const MessageItem = ({ message }) => {
                     <div className="chat-message-content overflow-hidden">
                         <ReactMarkdown>{message.message}</ReactMarkdown>
                     </div>
+                    {console.log(message.attachments)}
+                    <MessageAttachments attachments={message.attachments} attachmentClick={attachmentClick} />
+                    {message.attachments.length > 0 && console.log(message.attachments)}
                 </div>
             </div>
             <div className="chat-footer">

@@ -10,7 +10,6 @@ use App\Models\Group;
 use App\Models\Message;
 use App\Models\MessageAttachment;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +21,18 @@ class MessageController extends Controller
             ->orWhere('sender_id', $user->id)
             ->where('receiver_id', auth()->id())
             ->latest()
-            ->paginate(10);
+            ->paginate(30);
+
+        $DBAttachments = MessageAttachment::all();
+        foreach($messages as $message){
+            $temp = [];
+            foreach($DBAttachments as $attachment){
+                if($message->id == $attachment->message_id){
+                    $temp[] = $attachment;
+                }
+            }
+            $message->attachments = $temp;
+        }
 
         return inertia('Home', [
             'selectedConversation' => $user->toConversationArray(),
@@ -34,7 +44,18 @@ class MessageController extends Controller
     public function byGroup(Group $group){
         $messages = Message::where('group_id', $group->id)
             ->latest()
-            ->paginate(10);
+            ->paginate(30);
+
+        $DBAttachments = MessageAttachment::all();
+        foreach($messages as $message){
+            $temp = [];
+            foreach($DBAttachments as $attachment){
+                if($message->id == $attachment->message_id){
+                    $temp[] = $attachment;
+                }
+            }
+            $message->attachments = $temp;
+        }
 
         return inertia('Home', [
             'selectedConversation' => $group->toConversationArray(),
@@ -48,7 +69,7 @@ class MessageController extends Controller
             $messages = Message::where('created_at', '<', $message->created_at)
                 ->where('group_id', $message->group_id)
                 ->latest()
-                ->paginate(10);
+                ->paginate(30);
         }else{
             $messages = Message::where('created_at', '<', $message->created_at)
                 ->where(function ($query) use ($message){
@@ -58,7 +79,18 @@ class MessageController extends Controller
                         ->where('receiver_id', $message->sender_id);
                 })
                 ->latest()
-                ->paginate(10);
+                ->paginate(35);
+        }
+
+        $DBAttachments = MessageAttachment::all();
+        foreach($messages as $message){
+            $temp = [];
+            foreach($DBAttachments as $attachment){
+                if($message->id == $attachment->message_id){
+                    $temp[] = $attachment;
+                }
+            }
+            $message->attachments = $temp;
         }
         return MessageResource::collection($messages);
     }
@@ -69,14 +101,16 @@ class MessageController extends Controller
         $data['sender_id'] = auth()->id();
         $receiverId = $data['receiver_id'] ?? null;
         $groupId = $data['group_id'] ?? null;
+
         $files = $data['attachments'] ?? [];
 
         $message = Message::create($data);
 
-        $attachments = [];
+
+        $attach = [];
         if($files){
             foreach($files as $file){
-                $directory = 'attachments/' . Str::random(32);
+                $directory = 'attachments/' .Str::random(32);
                 Storage::makeDirectory($directory);
                 $model = [
                     'message_id' => $message->id,
@@ -86,10 +120,11 @@ class MessageController extends Controller
                     'path' => $file->store($directory, 'public'),
                 ];
                 $attachment = MessageAttachment::create($model);
-                $attachments[] = $attachment;
+                $attach[] = $attachment;
             }
-            $message->attachments = $attachments;
+            $message->attachments = $attach;
         }
+
 
         if($receiverId){
             Conversation::updateConversationWithMessage($receiverId, auth()->id(), $message);

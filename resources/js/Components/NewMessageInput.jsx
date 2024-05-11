@@ -1,30 +1,23 @@
-
-
 import { useEffect, useRef } from "react";
 
-const NewMessageInput = ({ value, onChange, onSend }) => {
-
+const NewMessageInput = ({ value, onChange, onSend, isSending }) => {
     const input = useRef();
 
     const onInputKeyDown = (e) => {
-        if(e.key === 'Enter' && !e.shiftKey){
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             onSend();
         }
     }
 
     const onChangeEvent = (e) => {
-        setTimeout(() => {
-            adjustHeight();
-        }, 10);
         onChange(e);
+        adjustHeight();
     }
 
     const adjustHeight = () => {
-        setTimeout(() => {
-            input.current.style.height = 'auto';
-            input.current.style.height = input.current.scrollHeight + 1 + "px";
-        }, 100);
+        input.current.style.height = "50px";
+        input.current.style.height = input.current.scrollHeight + "px";
     }
 
     useEffect(() => {
@@ -33,16 +26,15 @@ const NewMessageInput = ({ value, onChange, onSend }) => {
 
     return (
         <textarea
+            disabled={isSending}
             ref={input}
             value={value}
-            rows='1'
             placeholder="Type a message"
             onKeyDown={onInputKeyDown}
             onChange={(e) => onChangeEvent(e)}
-            className="input input-bordered w-full rounded-r-none resize-none overflow-y-auto max-h-40"
-        >
-
-        </textarea>
+            className="input input-bordered w-full rounded-r-none py-[10px] resize-none overflow-y-auto"
+            style={{ minHeight: '50px' }}
+        />
     );
 }
 

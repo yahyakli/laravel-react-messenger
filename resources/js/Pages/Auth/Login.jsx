@@ -90,6 +90,10 @@ export default function Login({ status, canResetPassword }) {
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
+
+                </div>
+                <div className='text-center mt-3'>
+                    Create an accounte from <Link href='/register' className='underline hover:text-gray-500'>here !</Link>
                 </div>
             </form>
         </GuestLayout>
