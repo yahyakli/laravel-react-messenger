@@ -21,9 +21,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                     <div className="chat-message-content overflow-hidden">
                         <ReactMarkdown>{message.message}</ReactMarkdown>
                     </div>
-                    {console.log(message.attachments)}
                     <MessageAttachments attachments={message.attachments} attachmentClick={attachmentClick} />
-                    {message.attachments.length > 0 && console.log(message.attachments)}
                 </div>
             </div>
             <div className="chat-footer">

@@ -31,7 +31,6 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                             {isImage(attachment) && (
                                 <div>
                                     <img src={attachment.url} className="object-contain aspect-square h-32 w-32" />
-                                    {console.log(attachment.url)}
                                 </div>
                             )}
                             {isVideo(attachment) && (
@@ -40,7 +39,7 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
 
                                     <div className="absolute left-0 top-0 w-full h-full bg-black/50 z-10"></div>
 
-                                    <video src={attachment.url}></video>
+                                    <video src={attachment.url} className="h-32 w-32"></video>
                                 </div>
                             )}
                             {isAudio(attachment) && (

@@ -16,8 +16,10 @@ export const AttachmentPerviewModal = ({
         return attachments[currentIndex];
     }, [attachments, currentIndex]);
 
+
+    console.log(attachments);
     const previewableAttachments = useMemo(() => {
-        return attachments.filter((attachment) => isPreviewable(attachment));
+        return isPreviewable(attachments)
     }, [attachments]);
 
     const close = () => {
@@ -96,28 +98,29 @@ export const AttachmentPerviewModal = ({
                                             <ChevronRightIcon className="w-12"/>
                                         </div>
                                     )}
-                                    {attachment && (
+                                    {attachments && (
                                         <div className="flex items-center justify-center w-full h-full p-3">
-                                            {isImage(attachment) && (
-                                                <img src={attachment.url} alt={attachment.name} className="max-w-full max-h-full"/>
+                                            {console.log(attachments.mime)}
+                                            {isImage(attachments) && (
+                                                <img src={attachments.url} alt={attachments.name} className="max-w-full max-h-full"/>
                                             )}
-                                            {isVideo(attachment) && (
+                                            {isVideo(attachments) && (
                                                 <div className="flex items-center">
-                                                    <video src={attachment.url} controls autoPlay></video>
+                                                    <video src={attachments.url} controls autoPlay></video>
                                                 </div>
                                             )}
-                                            {isAudio(attachment) && (
+                                            {isAudio(attachments) && (
                                                 <div className="relative flex justify-center items-center">
-                                                    <audio src={attachment.url} controls autoPlay></audio>
+                                                    <audio src={attachments.url} controls autoPlay></audio>
                                                 </div>
                                             )}
-                                            {isPDF(attachment) && (
-                                                <iframe className="w-full h-full" src={attachment.url}></iframe>
+                                            {isPDF(attachments) && (
+                                                <iframe className="w-full h-full" src={attachments.url}></iframe>
                                             )}
-                                            {!isPreviewable(attachment) && (
+                                            {!isPreviewable(attachments) && (
                                                 <div className="p-32 flex flex-col justify-center items-center text-gray-100">
                                                     <PaperClipIcon className="w-10 h-10 mb-3" />
-                                                    <small>{attachment.name}</small>
+                                                    <small>{attachments.name}</small>
                                                 </div>
                                             )}
                                         </div>

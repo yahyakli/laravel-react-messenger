@@ -29,11 +29,10 @@ const NewMessageInput = ({ value, onChange, onSend, isSending }) => {
             disabled={isSending}
             ref={input}
             value={value}
-            placeholder="Type a message"
+            placeholder="Type ..."
             onKeyDown={onInputKeyDown}
             onChange={(e) => onChangeEvent(e)}
-            className="input input-bordered w-full rounded-r-none py-[10px] resize-none overflow-y-auto"
-            style={{ minHeight: '50px' }}
+            className="input input-bordered w-full rounded-r-none py-[10px] resize-none overflow-y-auto tgadi"
         />
     );
 }

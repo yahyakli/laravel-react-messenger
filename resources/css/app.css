@@ -38,10 +38,7 @@
 .conversation-item .avatar.offline::before{
     background-color: #eeeeeeee;
 }
-/* .custommm{
-    height: calc(100vh - 200px);
-    min-height:max-content;
-} */
+
 
 .chat-message-content > blockquote,
 .chat-message-content > dl,
@@ -123,6 +120,9 @@
 }
 .taankicha{
     bottom: 82px;
+}
+.tgadi{
+    height: 50px !important;
 }
 @media(max-width:420px){
     .custommm{

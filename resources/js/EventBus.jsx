@@ -29,7 +29,7 @@ export const EventBusProvider = ({ children }) => {
     }
 
     return (
-        <EventBusContext.Provider value={{ emit, on}}>
+        <EventBusContext.Provider value={{ emit, on }}>
             {children}
         </EventBusContext.Provider>
     );

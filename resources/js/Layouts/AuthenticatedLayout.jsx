@@ -6,6 +6,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import Echo from 'laravel-echo';
 import { useEventBus } from '@/EventBus';
+import { Toast } from '@/Components/Toast';
+import { NewMessageNotification } from '@/Components/NewMessageNotification';
 
 export default function Authenticated({ header, children }) {
     const page = usePage();
@@ -64,7 +66,8 @@ export default function Authenticated({ header, children }) {
     }, [conversations])
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col h-screen">
+        <>
+            <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col h-screen">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -175,5 +178,8 @@ export default function Authenticated({ header, children }) {
             )}
             {children}
         </div>
+        <Toast />
+        <NewMessageNotification />
+        </>
     );
 }
