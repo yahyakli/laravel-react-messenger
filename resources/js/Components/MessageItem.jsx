@@ -4,6 +4,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { formatMessageDateLong } from "@/helpers"
 import MessageAttachments from "./MessageAttachments";
+import MessageOptionsDropdown from "./MessageOptionsDropdown";
 
 const MessageItem = ({ message, attachmentClick }) => {
     const page = usePage();
@@ -17,6 +18,9 @@ const MessageItem = ({ message, attachmentClick }) => {
                 <div className="opacity-50">{message.sender.name}</div>
             )}
             <div className={`chat-bubble ${message.sender.id === currentUser.id? "chat-bubble-accent": "chat-bubble-primary"}`}>
+                {message.sender_id == currentUser.id && (
+                    <MessageOptionsDropdown message={message}/>
+                )}
                 <div className="chat-message">
                     <div className="chat-message-content overflow-hidden">
                         <ReactMarkdown>{message.message}</ReactMarkdown>

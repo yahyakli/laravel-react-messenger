@@ -31,6 +31,19 @@ function Home({ messages = null, selectedConversation = null }) {
         }
     };
 
+    const messageDeleted = ({message}) => {
+        if(selectedConversation && selectedConversation.is_group && selectedConversation.id === message.is_group){
+            setLocalMessages((prevMessage) => {
+                return prevMessage.filter((m) => m.id !== message.id);
+            });
+        }
+        if(selectedConversation && selectedConversation.is_user && selectedConversation.id === message.sender_id || selectedConversation.id == message.receiver_id){
+            setLocalMessages((prevMessage) => {
+                return prevMessage.filter((m) => m.id !== message.id);
+            });
+        }
+    }
+
     const onAttachmentClick = (attachments, ind) => {
         setPreviewAttachment({
             attachments,
@@ -75,12 +88,14 @@ function Home({ messages = null, selectedConversation = null }) {
         }, 10);
 
         const offCreated = on('message.created', messageCreated);
+        const offDeleted = on('message.deleted', messageDeleted);
 
         setScrollFromBottom(0);
         setNoMoreMessages(false);
 
         return () => {
             offCreated();
+            offDeleted();
         }
     }, [selectedConversation]);
 

@@ -106,7 +106,6 @@
     font-size: 90%;
     background-color: rgba(0, 0, 0, 0.1);
 }
-
 .chat-message-content pre{
     padding: 1rem;
     white-space: no-wrap;
@@ -130,5 +129,9 @@
     }
     .taankicha{
         bottom: 112px;
+    }
+    .audiowat{
+        width: 80%;
+        margin-right: -60px;
     }
 }
