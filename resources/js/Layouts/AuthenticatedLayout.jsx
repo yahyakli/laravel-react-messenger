@@ -49,7 +49,18 @@ export default function Authenticated({ header, children }) {
                                     }`
                             })
                         })
-            });
+
+            if(conversation.is_group){
+                window.Echo.private(`group.deleted.${conversation.id}`)
+                .listen("GroupDeleted", (e) => {
+                    console.log("GroupDeleted", e);
+                    emit("group.deleted", {id: e.id, name: e.name});
+                })
+                .error(err => {
+                    console.log(err);
+                });
+            }
+        });
         return () => {
             conversations.forEach((conversation) => {
                 let channel = `message.group.${conversation.id}`;
@@ -59,8 +70,10 @@ export default function Authenticated({ header, children }) {
                         parseInt(conversation.id),
                     ].sort((a, b) => a - b).join("-")}`;
                 }
-
                 window.Echo.leave(channel);
+                if(conversation.is_group) {
+                    window.Echo.leave(`group.deleted.${conversation.id}`);
+                }
             })
         };
     }, [conversations])

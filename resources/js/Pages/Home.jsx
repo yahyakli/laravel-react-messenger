@@ -23,12 +23,12 @@ function Home({ messages = null, selectedConversation = null }) {
     const [previewAttachment, setPreviewAttachment] = useState({});
 
     const messageCreated = (message) => {
-        if(selectedConversation && selectedConversation.is_group && selectedConversation.id === message.is_group){
-            setLocalMessages((prevMessage) => [...prevMessage, message]);
-        }
-        if(selectedConversation && selectedConversation.is_user && selectedConversation.id === message.sender_id || selectedConversation.id == message.receiver_id){
-            setLocalMessages((prevMessage) => [...prevMessage, message]);
-        }
+        // if(selectedConversation && selectedConversation.is_group && selectedConversation.id === message.group.id){
+        //     setLocalMessages((prevMessage) => [...prevMessage, message]);
+        // }
+        // if(selectedConversation && selectedConversation.is_user && selectedConversation.id === message.sender_id || selectedConversation.id == message.receiver_id){
+        // }
+        setLocalMessages((prevMessage) => [...prevMessage, message]);
     };
 
     const messageDeleted = ({message}) => {

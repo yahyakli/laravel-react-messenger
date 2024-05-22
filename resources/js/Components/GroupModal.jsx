@@ -75,7 +75,7 @@ export const GroupModal = ({ show = false, onClose = () => {}}) => {
             >
                 <h2 className="text-xl font-medium text-gray-900 dark:text-gray-100">
                     {group.id
-                        ? `Edit Group "${group.name}"}`
+                        ? `Edit Group "${group.name}"`
                         : "Create new Group"
                     }
                 </h2>
@@ -83,7 +83,7 @@ export const GroupModal = ({ show = false, onClose = () => {}}) => {
                 <div className="mt-8">
                     <InputLabel htmlFor="name" value="name"/>
 
-                    <TextInput id="name" className="mt-1 block w-full" value={data.name} disabled={!!group.id} onChange={(e) => setData("name", e.target.value)} required isFocused/>
+                    <TextInput id="name" className="mt-1 block w-full" value={data.name} onChange={(e) => setData("name", e.target.value)} required isFocused/>
 
                     <InputError className="mt-2" message={errors.name}/>
                 </div>

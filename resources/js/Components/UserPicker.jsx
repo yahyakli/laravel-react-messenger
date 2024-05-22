@@ -99,7 +99,7 @@ export const UserPicker = ({ value, options, onSelect }) => {
                 </div>
             </Combobox>
             {selected && (
-                <div className="flex gap-2 mt-3">
+                <div className="flex flex-wrap gap-2 mt-3">
                     {selected.map((person) => (
                         <div
                             key={person.id}

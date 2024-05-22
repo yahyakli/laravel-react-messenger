@@ -22,7 +22,7 @@ export const Toast = ({  }) => {
     return (
         <div className="toast">
             {toasts.map((toast, index) => (
-                <div key={toast.uuid} className="alert alert-success py-3 px-4 text-gray-100 rounded-lg min-w-[240px]">
+                <div key={toast.uuid} className="alert alert-success py-3 px-4 text-gray-100 rounded-lg min-w-[240px] xs:w-auto">
                     <span>{toast.message}</span>
                 </div>
             ))}

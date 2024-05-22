@@ -1,9 +1,14 @@
 
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import UserAvatar from "./UserAvatar";
 import { ArrowLeftIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import { GroupDescriptionPopover } from "./GroupDescriptionPopover";
+import { GroupUsersPopover } from "./GroupUsersPopover";
+import { useEventBus } from "@/EventBus";
 const ConversationHeader = ({selectedConversation}) => {
+    const authUser = usePage().props.auth.user;
+    const { emit } = useEventBus();
 
     const onDeleteGroup = () => {
         if(!window.confirm("Are you sure you want to delete this group?")){
@@ -12,6 +17,7 @@ const ConversationHeader = ({selectedConversation}) => {
         axios.delete(route("group.destroy", selectedConversation.id))
             .then((res)=>{
                 console.log(res);
+                emit('toast.show', res.data.message);
             })
             .catch((err) => {
                 console.log(err);
@@ -69,7 +75,7 @@ const ConversationHeader = ({selectedConversation}) => {
                                         </button>
                                     </div>
                                     <div
-                                        className="tooltip tooltop-left"
+                                        className="tooltip tooltop-left px-4"
                                         data-tip="Delete Group"
                                     >
                                         <button
