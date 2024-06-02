@@ -18,44 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'yahya',
+            'name' => 'YAHYA AKLI',
             'email' => 'yahya@gmail.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('yahya'),
             'is_admin' => true
         ]);
         User::factory()->create([
-            'name' => 'akli',
-            'email' => 'akli@gmail.com',
-            'password' => bcrypt('akli'),
+            'name' => 'test user',
+            'email' => 'test@gmail.com',
+            'password' => bcrypt('test'),
             'is_admin' => false
         ]);
 
         User::factory(10)->create();
-
-        for ($i=0; $i < 5; $i++) {
-            $group = Group::factory()->create([
-                'owner_id' => 1,
-            ]);
-            $users = User::inRandomOrder()->limit(rand(2, 5))->pluck('id');
-            $group->users()->attach(array_unique([1, ...$users]));
-        }
-
-        Message::factory(1000)->create();
-        $message = Message::whereNull('group_id')->orderBy('created_at')->get();
-
-        $conversations = $message->groupBy(function ($message){
-            return collect([$message->sender_id, $message->receiver_id])
-            ->sort()->implode('_');
-        })->map(function ($groupedMessages){
-            return [
-                'user_id1' => $groupedMessages->first()->sender_id,
-                'user_id2' => $groupedMessages->first()->receiver_id,
-                'last_message_id' => $groupedMessages->last()->id,
-                'created_at' => new Carbon(),
-                'updated_at' => new Carbon(),
-            ];
-        })->values();
-
-        Conversation::insertOrIgnore($conversations->toArray());
     }
 }
