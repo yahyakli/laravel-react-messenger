@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import UserAvatar from "@/Components/UserAvatar"
 import GroupAvatar from "@/Components/GroupAvatar"
 import UserOptionsDropdown from "@/Components/UserOptionsDropdown"
@@ -20,6 +20,9 @@ export default function ConversationItem({
 
     return (
         <div className="my-2 hover:bg-black/40">
+            {selectedConversation && (
+                <Head title={selectedConversation.name}/>
+            )}
             <Link
                 href={
                     conversation.is_group

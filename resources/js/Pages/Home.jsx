@@ -157,7 +157,7 @@ function Home({ messages = null, selectedConversation = null }) {
                     <ConversationHeader selectedConversation={selectedConversation}/>
                     <div
                         ref={messagesCtrRef}
-                        className='flex-1 p-5 overflow-y-auto h-[75vh] custommm'
+                        className='flex-1 p-5 overflow-y-auto overflow-x-hidden h-[75vh] custommm'
                     >
                         {isLoadMessages && (
                             <div className='flex justify-center w-full mb-10'>
