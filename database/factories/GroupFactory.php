@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,8 @@ class GroupFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->text(200),
+            'owner_id' => 1
         ];
     }
 }

@@ -40,7 +40,7 @@ class MessageFactory extends Factory
             'sender_id' => $senderId,
             'receiver_id' => $receiverId,
             'group_Id' => $groupId,
-            'message' => $this->faker->realText(200),
+            'message' => $this->faker->text(200),
             'message' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
